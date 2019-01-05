@@ -1,1 +1,2 @@
 5/1/19 - Extracted all frames from the given video
+5/1/19 - Extracted timestamp along with frame
