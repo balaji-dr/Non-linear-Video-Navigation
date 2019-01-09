@@ -1,2 +1,5 @@
+Click==7.0
 numpy==1.15.4
 opencv-python==3.4.5.20
+scenedetect==0.5
+tqdm==4.29.0
