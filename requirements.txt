@@ -1,5 +1,8 @@
 Click==7.0
+imutils==0.5.2
 numpy==1.15.4
 opencv-python==3.4.5.20
 scenedetect==0.5
+scikit-learn==0.20.2
+scipy==1.2.0
 tqdm==4.29.0
