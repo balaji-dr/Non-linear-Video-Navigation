@@ -10,6 +10,8 @@ import argparse
 import imutils
 import cv2
 import os
+import redis
+import pickle
 
 
 def image_to_feature_vector(image, size=(32, 32)):
@@ -112,7 +114,12 @@ acc = model.score(testFeat, testLabels)
 print("[INFO] histogram accuracy: {:.2f}%".format(acc * 100))
 
 
-image = cv2.imread("/Users/balajidr/Downloads/knn-classifier/5b7fdeab1900001d035028dc.jpeg")
+image = cv2.imread("/Users/balajidr/Developer/FYP_TEMP/sceneDetection/trainingdata/nonslide.2.jpg")
 hist = extract_color_histogram(image)
 prediction = model.predict([hist])
 print("Predicted class is -> ", str(prediction[0]).upper())
+
+r = redis.Redis(host='localhost', port=6379, db=0)
+pickled_object = pickle.dumps(model)
+model_stored = r.set('model', pickled_object)
+print("The trained model is stored -> ", model_stored)
