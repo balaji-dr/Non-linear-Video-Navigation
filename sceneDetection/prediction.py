@@ -24,7 +24,6 @@ def extract_color_histogram(image, bins=(8, 8, 8)):
         cv2.normalize(hist, hist)
     return hist.flatten()
 
-<<<<<<< HEAD
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
 args = vars(ap.parse_args())
@@ -52,14 +51,3 @@ for (i, imagePath) in enumerate(imagePaths):
     prediction = model2.predict([hist])
     print("Predicted class is -> ", str(prediction[0]).upper())
     
-=======
-
-r = redis.Redis(host='localhost', port=6379, db=0)
-model = unpacked_object = pickle.loads(r.get("model"))
-
-
-image = cv2.imread("/Users/balajidr/Developer/FYP_TEMP/sceneDetection/trainingdata/slide.627.jpg")
-hist = extract_color_histogram(image)
-prediction = model.predict([hist])
-print("Predicted class is -> ", str(prediction[0]).upper())
->>>>>>> 4d5acadd8eb8e22dac24ae220a2c902cfd0d5f86
