@@ -100,14 +100,21 @@ print("[INFO] features matrix: {:.2f}MB".format(
 
 # train and evaluate a k-NN classifer on the raw pixel intensities
 print("[INFO] evaluating raw pixel accuracy...")
+<<<<<<< HEAD
 model1 = KNeighborsClassifier(n_neighbors=args["neighbors"], n_jobs=args["jobs"])
 model1.fit(trainRI, trainRL)
 acc = model1.score(testRI, testRL)
+=======
+model = KNeighborsClassifier(n_neighbors=args["neighbors"], n_jobs=args["jobs"])
+model.fit(trainRI, trainRL)
+acc = model.score(testRI, testRL)
+>>>>>>> 4d5acadd8eb8e22dac24ae220a2c902cfd0d5f86
 print("[INFO] raw pixel accuracy: {:.2f}%".format(acc * 100))
 
 # train and evaluate a k-NN classifer on the histogram
 # representations
 print("[INFO] evaluating histogram accuracy...")
+<<<<<<< HEAD
 model2 = KNeighborsClassifier(n_neighbors=args["neighbors"], n_jobs=args["jobs"])
 model2.fit(trainFeat, trainLabels)
 acc = model2.score(testFeat, testLabels)
@@ -125,3 +132,20 @@ model_stored1 = r.set('model1', pickled_object1)
 pickled_object2 = pickle.dumps(model2)
 model_stored2 = r.set('model2', pickled_object2)
 print("The trained model is stored -> ", model_stored1,model_stored2)
+=======
+model = KNeighborsClassifier(n_neighbors=args["neighbors"], n_jobs=args["jobs"])
+model.fit(trainFeat, trainLabels)
+acc = model.score(testFeat, testLabels)
+print("[INFO] histogram accuracy: {:.2f}%".format(acc * 100))
+
+
+image = cv2.imread("/Users/balajidr/Developer/FYP_TEMP/sceneDetection/trainingdata/nonslide.2.jpg")
+hist = extract_color_histogram(image)
+prediction = model.predict([hist])
+print("Predicted class is -> ", str(prediction[0]).upper())
+
+r = redis.Redis(host='localhost', port=6379, db=0)
+pickled_object = pickle.dumps(model)
+model_stored = r.set('model', pickled_object)
+print("The trained model is stored -> ", model_stored)
+>>>>>>> 4d5acadd8eb8e22dac24ae220a2c902cfd0d5f86
