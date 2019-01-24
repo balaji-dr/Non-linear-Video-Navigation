@@ -9,10 +9,6 @@ import imutils
 def image_to_feature_vector(image, size=(32, 32)):
 	return cv2.resize(image, size).flatten()
 
-import cv2
-import pickle
-import imutils
-
 
 def extract_color_histogram(image, bins=(8, 8, 8)):
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
