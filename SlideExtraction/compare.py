@@ -5,7 +5,7 @@
 # import the necessary packages
 from scipy.spatial import distance as dist
 import matplotlib
-matplotlib.use('TkAgg')
+matplotlib.use('pdf')
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
@@ -25,7 +25,7 @@ index = {}
 images = {}
 
 # loop over the image paths
-for imagePath in glob.glob(args["dataset"] + "/*.png"):
+for imagePath in glob.glob(args["dataset"] + "/*.jpg"):
 	# extract the image filename (assumed to be unique) and
 	# load the image, updating the images dictionary
 	filename = imagePath[imagePath.rfind("/") + 1:]
@@ -64,7 +64,7 @@ for (methodName, method) in OPENCV_METHODS:
 	for (k, hist) in index.items():
 		# compute the distance between the two histograms
 		# using the method and update the results dictionary
-		d = cv2.compareHist(index["doge.png"], hist, method)
+		d = cv2.compareHist(index["ns1.jpg"], hist, method)
 		results[k] = d
 
 	# sort the results
@@ -73,23 +73,29 @@ for (methodName, method) in OPENCV_METHODS:
 	# show the query image
 	fig = plt.figure("Query")
 	ax = fig.add_subplot(1, 1, 1)
-	ax.imshow(images["doge.png"])
+	ax.imshow(images["ns1.jpg"])
 	plt.axis("off")
 
 	# initialize the results figure
 	fig = plt.figure("Results: %s" % (methodName))
-	fig.suptitle(methodName, fontsize = 20)
+	fig.suptitle(methodName, fontsize = 10)
 
 	# loop over the results
+	temp = 0
 	for (i, (v, k)) in enumerate(results):
 		# show the result
 		ax = fig.add_subplot(1, len(images), i + 1)
-		ax.set_title("%s: %.2f" % (k, v))
-		plt.imshow(images[k])
+		if temp%2 == 0:
+			plt.imshow(images[k])
+			ax.set_title("%s: %.2f" % (k, v))
+		else:
+			ax.set_title("%s: %.2f" % (k, v))
+			plt.imshow(images[k])
 		plt.axis("off")
 
 # show the OpenCV methods
 plt.show()
+plt.savefig("plot.pdf")
 
 
 # METHOD #2: UTILIZING SCIPY
@@ -108,7 +114,7 @@ for (methodName, method) in SCIPY_METHODS:
 	for (k, hist) in index.items():
 		# compute the distance between the two histograms
 		# using the method and update the results dictionary
-		d = method(index["doge.png"], hist)
+		d = method(index["ns1.jpg"], hist)
 		results[k] = d
 
 	# sort the results
@@ -117,7 +123,7 @@ for (methodName, method) in SCIPY_METHODS:
 	# show the query image
 	fig = plt.figure("Query")
 	ax = fig.add_subplot(1, 1, 1)
-	ax.imshow(images["doge.png"])
+	ax.imshow(images["ns1.jpg"])
 	plt.axis("off")
 
 	# initialize the results figure
@@ -152,7 +158,7 @@ for (k, hist) in index.items():
 	# compute the distance between the two histograms
 	# using the custom chi-squared method, then update
 	# the results dictionary
-	d = chi2_distance(index["doge.png"], hist)
+	d = chi2_distance(index["ns1.jpg"], hist)
 	results[k] = d
 
 # sort the results
@@ -161,12 +167,13 @@ results = sorted([(v, k) for (k, v) in results.items()])
 # show the query image
 fig = plt.figure("Query")
 ax = fig.add_subplot(1, 1, 1)
-ax.imshow(images["doge.png"])
+ax.imshow(images["ns1.jpg"])
 plt.axis("off")
 
 # initialize the results figure
 fig = plt.figure("Results: Custom Chi-Squared")
 fig.suptitle("Custom Chi-Squared", fontsize = 20)
+# fig.savefig('demo.pdf')
 
 # loop over the results
 for (i, (v, k)) in enumerate(results):
@@ -178,3 +185,4 @@ for (i, (v, k)) in enumerate(results):
 
 # show the custom method
 plt.show()
+# plt.savefig("plot.pdf")
