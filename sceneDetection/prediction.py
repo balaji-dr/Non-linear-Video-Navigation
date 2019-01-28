@@ -20,11 +20,12 @@ def extract_color_histogram(image, bins=(8, 8, 8)):
         cv2.normalize(hist, hist)
     return hist.flatten()
 
+
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
 args = vars(ap.parse_args())
-
 imagePaths = list(paths.list_images(args["dataset"]))
+
 
 r = redis.Redis(host='localhost', port=6379, db=0)
 model1 = unpacked_object = pickle.loads(r.get("model1"))
@@ -38,7 +39,9 @@ for (i, imagePath) in enumerate(imagePaths):
     prediction = model1.predict([pixels])
     print("Predicted class is -> ", str(prediction[0]).upper())
 
+
 print("Histogram")
+
 
 for (i, imagePath) in enumerate(imagePaths):
     image = cv2.imread(imagePath)
@@ -46,4 +49,3 @@ for (i, imagePath) in enumerate(imagePaths):
     hist = extract_color_histogram(image)
     prediction = model2.predict([hist])
     print("Predicted class is -> ", str(prediction[0]).upper())
-    

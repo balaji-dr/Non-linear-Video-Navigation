@@ -16,8 +16,7 @@ def image_to_feature_vector(image, size=(32, 32)):
 
 def extract_color_histogram(image, bins=(8, 8, 8)):
 	hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-	hist = cv2.calcHist([hsv], [0, 1, 2], None, bins,
-		[0, 180, 0, 256, 0, 256])
+	hist = cv2.calcHist([hsv], [0, 1, 2], None, bins,[0, 180, 0, 256, 0, 256])
 	
 	if imutils.is_cv2():
 		hist = cv2.normalize(hist)
@@ -36,9 +35,11 @@ args = vars(ap.parse_args())
 print("Describing images...")
 imagePaths = list(paths.list_images(args["dataset"]))
 
+
 rawImages = []
 features = []
 labels = []
+
 
 for (i, imagePath) in enumerate(imagePaths):
 	image = cv2.imread(imagePath)
@@ -54,24 +55,30 @@ for (i, imagePath) in enumerate(imagePaths):
 	if i > 0 and i % 1000 == 0:
 		print("Processed {}/{}".format(i, len(imagePaths)))
 
+
 rawImages = np.array(rawImages)
 features = np.array(features)
 labels = np.array(labels)
+
+
 print("Pixels matrix: {:.2f}MB".format(
 	rawImages.nbytes / (1024 * 1000.0)))
 print("Features matrix: {:.2f}MB".format(
 	features.nbytes / (1024 * 1000.0)))
+
 
 (trainRI, testRI, trainRL, testRL) = train_test_split(
 	rawImages, labels, test_size=0.25, random_state=42)
 (trainFeat, testFeat, trainLabels, testLabels) = train_test_split(
 	features, labels, test_size=0.25, random_state=42)
 
+
 print("Evaluating raw pixel accuracy...")
 model1 = KNeighborsClassifier(n_neighbors=args["neighbors"], n_jobs=args["jobs"])
 model1.fit(trainRI, trainRL)
 acc = model1.score(testRI, testRL)
 print("Raw pixel accuracy: {:.2f}%".format(acc * 100))
+
 
 print("Evaluating histogram accuracy...")
 model2 = KNeighborsClassifier(n_neighbors=args["neighbors"], n_jobs=args["jobs"])
