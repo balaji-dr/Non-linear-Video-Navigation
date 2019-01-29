@@ -49,3 +49,11 @@ for (i, imagePath) in enumerate(imagePaths):
     hist = extract_color_histogram(image)
     prediction = model2.predict([hist])
     print("Predicted class is -> ", str(prediction[0]).upper())
+
+
+def predict(imgpath):
+    image = cv2.imread(imgpath)
+    pixels = image_to_feature_vector(image)
+    prediction = model1.predict([pixels])
+    print("Predicted class is -> ", str(prediction[0]).upper())
+    return str(prediction[0]).upper()

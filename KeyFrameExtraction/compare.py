@@ -14,8 +14,7 @@ import cv2
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", required = True,
-	help = "Path to the directory of images")
+ap.add_argument("-d", "--dataset", required=True, help="Path to the directory of images")
 args = vars(ap.parse_args())
 
 # initialize the index dictionary to store the image name
@@ -95,7 +94,7 @@ for (methodName, method) in OPENCV_METHODS:
 
 # show the OpenCV methods
 plt.show()
-plt.savefig("plot.pdf")
+# plt.savefig("plot.pdf")
 
 
 # METHOD #2: UTILIZING SCIPY
@@ -140,6 +139,8 @@ for (methodName, method) in SCIPY_METHODS:
 
 # show the SciPy methods
 plt.show()
+plt.savefig("plot.pdf")
+
 
 # METHOD #3: ROLL YOUR OWN
 def chi2_distance(histA, histB, eps = 1e-10):
@@ -150,8 +151,10 @@ def chi2_distance(histA, histB, eps = 1e-10):
 	# return the chi-squared distance
 	return d
 
+
 # initialize the results dictionary
 results = {}
+
 
 # loop over the index
 for (k, hist) in index.items():
@@ -185,4 +188,4 @@ for (i, (v, k)) in enumerate(results):
 
 # show the custom method
 plt.show()
-# plt.savefig("plot.pdf")
+
