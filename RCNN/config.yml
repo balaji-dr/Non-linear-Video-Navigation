@@ -1,0 +1,26 @@
+
+train:
+  run_name: table-area-detection-0.1
+  # Base directory in which model checkpoints & summaries
+  job_dir: jobs/
+  save_checkpoint_secs: 10
+  save_summaries_secs: 10
+  num_epochs: 10
+
+dataset:
+  type: object_detection
+  dir: tfdata/classes-table/
+  image_preprocessing:
+    min_size: 600
+    max_size: 1024
+  data_augmentation:
+    - flip:
+        left_right: True
+        up_down: True
+        prob: 0.5
+
+model:
+  type: fasterrcnn
+  network:
+    num_classes: 1
+

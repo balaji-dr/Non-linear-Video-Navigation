@@ -2,3 +2,4 @@
 5/1/19 - Extracted timestamp along with frame
 20/1/19 - Added knn classifier
 20/1/19 - Added redis for storing the trained model
+29/1/19 - Added distance calculation and prediction - First Review

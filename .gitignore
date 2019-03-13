@@ -1,11 +1,15 @@
 .idea/
 *.jpg
+*.JPG
 *.png
 *.jpeg
 *.mp4
 *.avi
+*.pth
+*.tfrecords
 slides/
 videos/
 fypEnv/
 fypenv/
+RCNN/jobs/
 .vscode/

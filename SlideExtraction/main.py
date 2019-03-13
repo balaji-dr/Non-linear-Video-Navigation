@@ -92,7 +92,7 @@ if args["threshold"]:
     print(" ---> Given threshold value is %f" % args["threshold"])
 else:
     # print(" ---> No threshold value was provided. Taking the pre-calculated threshold value.")
-    args["threshold"] = 0.5
+    args["threshold"] = 0.070
 
 frame_directory = extract_all_frames(video_path=args["video"])
 print(" ---> Successfully extracted all the frames from the given video.")
@@ -127,7 +127,7 @@ SCIPY_METHODS = (
     ("Manhattan", dist.cityblock),
     ("Chebysev", dist.chebyshev))
 
-print(" ---> Applying Euclidean method to find the distance between two frames.")
+print(" ---> Applying Euclidean and Chebyshev method to find the distance between two frames.")
 
 # # loop over the comparison methods
 for (methodName, method) in SCIPY_METHODS:
@@ -168,7 +168,7 @@ for (methodName, method) in SCIPY_METHODS:
 
     prediction_bar = Bar('Predicting keyframes', max=len(results))
     for each in results:
-        # print("comparing %s with %s -> %0.10f" % (each["filename1"], each["filename2"], each["distance"]))
+        #print("comparing %s with %s -> %0.10f" % (each["filename1"], each["filename2"], each["distance"]))
         if each["distance"] > args["threshold"]:
             copy2(frame_directory + "/" + each["filename2"], BASE_DIR + "/SlideExtraction/keyframes")
             label = predict(imgpath=BASE_DIR + "/SlideExtraction/keyframes/" + each["filename2"])
